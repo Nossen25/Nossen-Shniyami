@@ -42,6 +42,12 @@ public void GetInfo(FirebaseAuth ma,FirebaseHelper.userFound userFound)
             }
         });
     }
+    public void ReadAllBusData(FirebaseHelper.ListOfBus callback){
+        firebaseHelper.ReadAllBusData(callback);
+    }
+//    public void GetInfoF(FirebaseHelper.ListOfBus callback){
+//        firebaseHelper.GetInfoF();
+//    }
 
     public void SigNUp(Account accountMoudle, Map<String,Object> map)
     {

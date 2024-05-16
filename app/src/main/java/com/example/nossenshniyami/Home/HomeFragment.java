@@ -1,4 +1,4 @@
-package com.example.nossenshniyami;
+package com.example.nossenshniyami.Home;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -21,11 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nossenshniyami.Account.AccountFragment;
 import com.example.nossenshniyami.Admin.AdminActivity;
 import com.example.nossenshniyami.BusinessModel.Business;
+import com.example.nossenshniyami.BusinessRecyclerViewAdapter;
+import com.example.nossenshniyami.FirebaseHelper.FirebaseHelper;
+import com.example.nossenshniyami.HelpUs;
+import com.example.nossenshniyami.MainActivity;
+import com.example.nossenshniyami.MapsActivity;
+import com.example.nossenshniyami.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,25 +85,42 @@ private RelativeLayout frameHome;
         }
     }
     private FirebaseAuth mAuth;
- private ImageButton btnOwner;
+    private HomeMoudle homeMoudle;
+    private MainActivity mainActivity;
+ private ImageButton btnOwner,btnHelp;
     @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//
+//
+//        View view = inflater.inflate(R.layout.fragment_home, container, false);
+//        homeMoudle = new HomeMoudle(getActivity());
+//        frameHome=view.findViewById(R.id.frameHome);
+//       // btnFilter=view.findViewById(R.id.btnFilter);
+//        btnMapView=view.findViewById(R.id.btnMapView);
+//        btnSerch=view.findViewById(R.id.btnSerch);
+//        btnOwner=view.findViewById(R.id.btnFilter);
+//        recyclerView = view.findViewById(R.id.list);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+//
+//
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        frameHome=view.findViewById(R.id.frameHome);
-        btnFilter=view.findViewById(R.id.btnFilter);
-        btnMapView=view.findViewById(R.id.btnMapView);
-        btnSerch=view.findViewById(R.id.btnSerch);
-        btnOwner=view.findViewById(R.id.btnOwner);
+
+        mainActivity = (MainActivity) requireActivity();
+
+        homeMoudle = new HomeMoudle(getActivity());
+        frameHome = view.findViewById(R.id.frameHome);
+        btnMapView = view.findViewById(R.id.btnMapView);
+        btnHelp = view.findViewById(R.id.btnHelp);
+        btnOwner = view.findViewById(R.id.btnFilter);
         recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        List<Business> data = new LinkedList<>();
-        data.add(new Business("איתןעומר והחומר","תל אביב" ,"0524648855",R.drawable.businesspic1));
-        data.add(new Business("רותם קורקוס והלוטוס","תל אביב" ,"5552220258",R.drawable.businesspic1));
-        recyclerView.setAdapter(new BusinessRecyclerViewAdapter(data));
-
+ //פה חתכתי את הקוד של צאט
+        PrintAllBus();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser == null){
@@ -119,6 +141,13 @@ private RelativeLayout frameHome;
                 //הכפתור לא מוצג
             }
         }
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireActivity(), HelpUs.class);
+                startActivity(intent);
+            }
+        });
 
 btnOwner.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -130,13 +159,27 @@ btnOwner.setOnClickListener(new View.OnClickListener() {
         btnMapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(requireActivity(),MapsActivity.class);
+                Intent intent =new Intent(requireActivity(), MapsActivity.class);
                 startActivity(intent);
             }
         });
 
         return view;
     }
+
+//    public void onBusinessItemClicked(Business business) {
+//        // Pass the business details to the ShoppingFragment
+//        Bundle bundle = new Bundle();
+//        bundle.putString("business_name", business.getName());
+//        bundle.putString("business_address", business.getAddress());
+//        // Add more details as needed
+//        ShoppingFragment fragment = new ShoppingFragment();
+//        fragment.setArguments(bundle);
+//        getParentFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_container, fragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
     public void movelogin()
     {
 
@@ -169,5 +212,17 @@ btnOwner.setOnClickListener(new View.OnClickListener() {
         builder.show();
     }
 
+    public void PrintAllBus(){
+        homeMoudle.ReadAllBusData(new FirebaseHelper.ListOfBus() {
+            @Override
+            public void onGotBus(LinkedList<Business> listOfBus) {
+                recyclerView.setAdapter(new BusinessRecyclerViewAdapter(listOfBus, HomeFragment.this));
+            }
+        });
+    }
+
+    public void addToShoppingList(Business business) {
+        mainActivity.addToSoppingCart(business);
+    }
 }
 

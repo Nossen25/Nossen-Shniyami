@@ -8,11 +8,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.nossenshniyami.Account.AccountFragment;
+import com.example.nossenshniyami.BusinessModel.Business;
+import com.example.nossenshniyami.Home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static boolean creditonoff=false;
     private BottomNavigationView bottom_navigation;
+
+    private HomeFragment homeFragment;
+    private AccountFragment accountFragment;
+    private ShoppingFragment shoppingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +29,21 @@ public class MainActivity extends AppCompatActivity {
         bottom_navigation = findViewById(R.id.bottom_navigation);
         bottom_navigation.setSelectedItemId(R.id.Home);
 
+        homeFragment = new HomeFragment();
+        accountFragment = new AccountFragment();
+        shoppingFragment = new ShoppingFragment();
+
 
         bottom_navigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.Account) {
 
-                replaceFragment(new AccountFragment());
+                replaceFragment(accountFragment);
             } else if (itemId == R.id.Home) {
 
-                replaceFragment(new HomeFragment());
+                replaceFragment(homeFragment);
             } else if (itemId == R.id.Cart) {
-                replaceFragment(new ShoppingFragment());
+                replaceFragment(shoppingFragment);
             }
             return true;
         });
@@ -56,4 +67,10 @@ public class MainActivity extends AppCompatActivity {
         bottom_navigation.setSelectedItemId(R.id.Account);
     }
 
+
+    public void addToSoppingCart(Business business)
+    {
+              
+        shoppingFragment.addToShoppingCart(business);
+    }
 }

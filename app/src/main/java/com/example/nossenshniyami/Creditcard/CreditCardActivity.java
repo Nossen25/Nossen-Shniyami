@@ -69,62 +69,62 @@ btnAddCredit.setOnClickListener(this);
     public void onClick(View v)
     {
 
-//     if (v==btnAddCredit)
-//     {
+     if (v==btnAddCredit)
+     {
 //
-////         //האם אני יכול למשוך מידע מהפיירבייס ? לשאול את גלעד
-//         if (editTextFullName.getText().toString().isEmpty())
-//         {
-//             editTextFullName.setError("נא למלא שם מלא");
-//             return;
-//         }
-//
-//         if (editTextPhoneNumber.getText().toString().length()==0)
-//         {
-//             editTextPhoneNumber.setError("נא למלא טלפון ");
-//             return;
-//         }
-//
-//         if (editTextCardNumber.getText().toString().length()==0)
-//         {
-//             editTextCardNumber.setError("נא למלא מספר כרטיס");
-//             return;
-//         }
-//         if (editTextCardNumber.getText().toString().length()!=16)
-//         {
-//             editTextCardNumber.setError("כרטיס לא תקין");
-//             return;
-//         }
-//         if (editTextExpiryDate.getText().length()==0)
-//         {
-//             editTextExpiryDate.setError("נא למלא תוקף");
-//             return;
-//         }
-//         if(editTextExpiryDate.getText().toString().indexOf('/')!=2)
-//         {
-//             editTextExpiryDate.setError("תוקף לא תקין");
-//             return;
-//         }
-//
-//         if (editTextCVC.getText().toString().length()==0)
-//         {
-//             editTextCVC.setError("נא למלא CVC");
-//             return;
-//         }
-//         if (editTextCVC.getText().toString().length()!=3)
-//         {
-//             editTextCVC.setError("צריך להיות 3 ספרות CVC");
-//             return;
-//         }
-//
-//         creditOnff=true;
-//         Intent intent = new Intent(CreditCardActivity.this,MainActivity.class);
-//         intent.putExtra("creditonff",creditOnff);
-//         startActivity(intent);
-//     }
-if(v==btnAddCredit)
-{
+////      ד
+         if (editTextFullName.getText().toString().isEmpty())
+         {
+             editTextFullName.setError("נא למלא שם מלא");
+             return;
+         }
 
-}
+         if (editTextPhoneNumber.getText().toString().length()==0)
+         {
+             editTextPhoneNumber.setError("נא למלא טלפון ");
+             return;
+         }
+
+         if (editTextCardNumber.getText().toString().length()==0)
+         {
+             editTextCardNumber.setError("נא למלא מספר כרטיס");
+             return;
+         }
+         if (editTextCardNumber.getText().toString().length()!=16)
+         {
+             editTextCardNumber.setError("כרטיס לא תקין");
+             return;
+         }
+         if (editTextExpiryDate.getText().length()==0)
+         {
+             editTextExpiryDate.setError("נא למלא תוקף");
+             return;
+         }
+         if(editTextExpiryDate.getText().toString().indexOf('/')!=2)
+         {
+             editTextExpiryDate.setError("תוקף לא תקין");
+             return;
+         }
+
+         if (editTextCVC.getText().toString().length()==0)
+         {
+             editTextCVC.setError("נא למלא CVC");
+             return;
+         }
+         if (editTextCVC.getText().toString().length()!=3)
+         {
+             editTextCVC.setError("צריך להיות 3 ספרות CVC");
+             return;
+         }
+
+         creditOnff=true;
+         Intent intent = new Intent(CreditCardActivity.this,MainActivity.class);
+         intent.putExtra("creditonff",creditOnff);
+         startActivity(intent);
+     }
+//if(v==btnAddCredit)
+//{
+//    creditOnff=true;
+//}
     }
 }

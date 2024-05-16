@@ -1,16 +1,24 @@
 package com.example.nossenshniyami;
 
+import static android.content.ContentValues.TAG;
+
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.Manifest;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.nossenshniyami.BusinessModel.Business;
 import com.example.nossenshniyami.databinding.ActivityMapsBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -20,10 +28,20 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private int markerindex=0;
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private ImageButton btnBackH, btnCirclzition; // corrected comma
@@ -81,6 +99,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sy = new LatLng(31, 34);
         mMap.addMarker(new MarkerOptions().position(sy).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(home));
+        EZUI();
+
+
+
+
+
+
 
 //        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 //            // TODO: Consider calling
@@ -150,6 +175,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+    private void addMarkerForBusiness(String businessName, String businessAddress) {
+        Geocoder geocoder = new Geocoder(this);
 
+        try {
+            // Geocode the business address to obtain coordinates
+            List<Address> addresses = geocoder.getFromLocationName(businessAddress, 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                double latitude = address.getLatitude();
+                double longitude = address.getLongitude();
+
+                // Add a marker to the map
+                LatLng businessLocation = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(businessLocation).title(businessName));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(businessLocation, 15)); // Adjust zoom level as needed
+            } else {
+                // Handle case where address could not be geocoded
+                Toast.makeText(this, "Failed to geocode address"+ " "+ businessName, Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle IOException
+            Toast.makeText(this, "Geocoding failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void EZUI()
+    {
+        db.collection("Business")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+
+                            LinkedList<Business> tempL = new LinkedList<>();
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Business bus = new Business();
+
+                                addMarkerForBusiness(document.getData().get("BusinessName").toString(),document.getData().get("BusinessAddress").toString());
+                            }
+
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
 
 }

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/frameHome"
-    tools:context=".HomeFragment"
+    tools:context=".Home.HomeFragment"
 
     >
 
@@ -39,11 +39,11 @@
 
 
     <ImageButton
-        android:id="@+id/btnSerch"
+        android:id="@+id/btnHelp"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:src="@drawable/baseline_manage_search_24"
+        android:src="@drawable/aboutus_vector"
         android:backgroundTint="#2A872D"
         android:layout_marginLeft="185dp"
         android:textColor="#063E08"

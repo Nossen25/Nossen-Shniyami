@@ -1,62 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
-
-
-
-
 
     <TextView
         android:id="@+id/textesek"
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="הוספת עסק"
-        android:textSize="50dp"
+        android:textSize="50sp" />
 
-
-        >
-
-
-
-    </TextView>
     <EditText
         android:id="@+id/BusinessName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textesek"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="Business Name"
-        android:layout_marginTop="100dp"
         android:inputType="textPersonName" />
-
-
-
-
 
     <EditText
         android:id="@+id/BusinessAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/BusinessName"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="Business Address" />
 
     <EditText
         android:id="@+id/PhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/BusinessAddress"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:hint="Phone Number"
         android:inputType="phone" />
+    <EditText
+        android:id="@+id/BInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/PhoneNumber"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Basic Info" />
+
+    <Button
+        android:id="@+id/btnAddPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BInfo"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:text="Add Photo" />
+
+    <ImageView
+        android:id="@+id/imgview"
+        android:layout_width="370dp"
+        android:layout_height="200dp"
+        android:layout_below="@id/btnAddPhoto"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/btnAddBusiness"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imgview"
+        android:layout_marginTop="16dp"
         android:textAllCaps="false"
         android:text="Add Business" />
 
-
-
-
-</LinearLayout>
+</RelativeLayout>
